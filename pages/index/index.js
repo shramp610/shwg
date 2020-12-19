@@ -25,7 +25,6 @@ Page({
     })
   },
   onLoad: function (options) {
-   
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -40,7 +39,6 @@ Page({
           userInfo: res.userInfo,
           hasUserInfo: true
         })
-        that.draw_calendar(tomonth);
       }
     } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
@@ -249,6 +247,5 @@ Page({
       })
     }
   }
-
 
 })

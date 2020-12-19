@@ -4,10 +4,11 @@
     "pages/logs/logs"
   ],
   "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "Weixin",
-    "navigationBarTextStyle":"black"
+    "backgroundTextStyle":"dark",
+    "navigationBarBackgroundColor": "#FF999A",
+    "navigationBarTitleText": "帅豪武馆",
+    "navigationBarTextStyle":"white",
+    "backgroundColor":"#fefdee"
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

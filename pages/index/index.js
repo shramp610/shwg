@@ -9,6 +9,7 @@ Page({
     monthly:false,
     danger:false,
     list:[],
+    queryBean:[],
     ymd:"",
     modalHidden:"hidden",
     selected_ymd:"",
@@ -25,6 +26,7 @@ Page({
     })
   },
   onLoad: function (options) {
+   
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -246,6 +248,92 @@ Page({
         love: false
       })
     }
+  },
+  check: function(){
+    wx.request({
+      url: "http://127.0.0.1:8080/index/check",
+      method : 'post',
+      header: {"Content-Type":"application/json"},
+      success: function( res ) {
+          this.inputValue=res.data
+        console.log(res)
+      }
+  });
+  },
+  javalogin: function(){
+    wx.getSystemInfo({
+      success: (res) => {
+        console.log(res.model)
+    console.log(res.pixelRatio)
+    console.log(res.windowWidth)
+    console.log(res.windowHeight)
+    console.log(res.language)
+    console.log(res.version)
+    console.log(res.platform)
+    console.log(res.environment)
+    if(res.environment != 'wxwork'){
+      wx.login({
+        timeout: 1000,
+        success(res){
+          if(res.code){
+            wx.request({
+              url: 'http://127.0.0.1:8080/index/login',
+              header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              data:{
+                code: res.code
+              },
+              method: 'POST',
+              dataType:'json',
+              success: function(res){
+                //请求成功的数据
+                console.log("数据返回成功" + JSON.stringify(res))
+              }
+            })
+          }
+        },
+        fail:function(){
+          console.log("发送code失败:",res.data)
+        }
+      })
+    }else{
+      console.log('进入企业微信登陆接口')
+      wx.qy.login({
+        timeout: 1000,
+        success(res){
+          if(res.code){
+            wx.request({
+              url: 'http://127.0.0.1:8080/index/qylogin',
+              header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              data:{
+                code: res.code
+              },
+              method: 'POST',
+              dataType:'json',
+              success: function(res){
+                //请求成功的数据
+                console.log("数据返回成功" + JSON.stringify(res))
+              }
+            })
+          }
+        },
+        fail:function(){
+          console.log("发送code失败:",res.data)
+        }
+      })
+    }
+  }
+    })
+  
+   
+  },
+  bindKeyInput: function (e) {
+    this.setData({
+      inputValue: e.detail.value
+    })
   }
 
 })
